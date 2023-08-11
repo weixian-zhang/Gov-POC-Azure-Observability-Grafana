@@ -1,0 +1,4 @@
+requests
+| where success == 'False'
+| where $__timeFilter(timestamp)
+| summarize Count=count() by URL=url, HTTP_CODE=resultCode, Duration=performanceBucket, CountryOfOrigin=client_CountryOrRegion

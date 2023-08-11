@@ -64,7 +64,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 18,
+        "h": 15,
         "w": 16,
         "x": 0,
         "y": 0
@@ -88,7 +88,7 @@
       "targets": [
         {
           "azureLogAnalytics": {
-            "query": "// availabilityResults \r\n// | extend appNameArr = split(appName, '/')\r\n// | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n// | order by timestamp desc \r\n// | where timestamp >= ago(24h) \r\n// | project timestamp, appNameResult, success\r\n// | summarize by Time=bin(timestamp, 15min), appNameResult\r\n// | evaluate pivot(appNameResult)\r\n\r\navailabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h)\r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 15min), webtestName\r\n| evaluate pivot(webtestName)",
+            "query": "availabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(8h) \r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 10min), webtestName\r\n| evaluate pivot(webtestName)",
             "resources": [
               "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-dev"
             ],
@@ -110,7 +110,7 @@
         },
         {
           "azureLogAnalytics": {
-            "query": "// availabilityResults \r\n// | extend appNameArr = split(appName, '/')\r\n// | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n// | order by timestamp desc \r\n// | where timestamp >= ago(24h) \r\n// | project timestamp, appNameResult, success\r\n// | summarize by Time=bin(timestamp, 15min), appNameResult\r\n// | evaluate pivot(appNameResult)\r\n\r\navailabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h)\r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 15min), webtestName\r\n| evaluate pivot(webtestName)",
+            "query": "availabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(8h) \r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 10min), webtestName\r\n| evaluate pivot(webtestName)",
             "resources": [
               "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-prod"
             ]
@@ -367,6 +367,6 @@
   "timezone": "",
   "title": "LTA - Applications",
   "uid": "fd0bfcae-7a66-4a66-85e8-3b3572c2d450",
-  "version": 33,
+  "version": 36,
   "weekStart": ""
 }
