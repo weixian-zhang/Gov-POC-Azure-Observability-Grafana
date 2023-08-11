@@ -1,0 +1,18 @@
+// availabilityResults 
+// | extend appNameArr = split(appName, '/')
+// | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])
+// | order by timestamp desc 
+// | where timestamp >= ago(24h) 
+// | project timestamp, appNameResult, success
+// | summarize by Time=bin(timestamp, 15min), appNameResult
+// | evaluate pivot(appNameResult)
+
+availabilityResults 
+| extend appNameArr = split(appName, '/')
+| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])
+| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))
+| order by timestamp desc 
+| where timestamp >= ago(24h)
+| project timestamp, webtestName, success
+| summarize by Time=bin(timestamp, 15min), webtestName
+| evaluate pivot(webtestName)

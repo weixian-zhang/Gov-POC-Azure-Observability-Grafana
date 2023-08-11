@@ -1,0 +1,372 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 30,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 100,
+            "lineWidth": 0
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colWidth": 0.89,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "rowHeight": 0.93,
+        "showValue": "never",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.6",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "query": "// availabilityResults \r\n// | extend appNameArr = split(appName, '/')\r\n// | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n// | order by timestamp desc \r\n// | where timestamp >= ago(24h) \r\n// | project timestamp, appNameResult, success\r\n// | summarize by Time=bin(timestamp, 15min), appNameResult\r\n// | evaluate pivot(appNameResult)\r\n\r\navailabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h)\r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 15min), webtestName\r\n| evaluate pivot(webtestName)",
+            "resources": [
+              "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-dev"
+            ],
+            "resultFormat": "$appinsights"
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "Dev",
+          "subscriptions": [
+            "ee611083-4581-4ba1-8116-a502d4539206"
+          ]
+        },
+        {
+          "azureLogAnalytics": {
+            "query": "// availabilityResults \r\n// | extend appNameArr = split(appName, '/')\r\n// | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n// | order by timestamp desc \r\n// | where timestamp >= ago(24h) \r\n// | project timestamp, appNameResult, success\r\n// | summarize by Time=bin(timestamp, 15min), appNameResult\r\n// | evaluate pivot(appNameResult)\r\n\r\navailabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h)\r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 15min), webtestName\r\n| evaluate pivot(webtestName)",
+            "resources": [
+              "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-prod"
+            ]
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "dimensionFilters": [],
+            "metricNamespace": "microsoft.insights/components",
+            "region": "southeastasia",
+            "resources": [
+              {
+                "metricNamespace": "microsoft.insights/components",
+                "region": "southeastasia",
+                "resourceGroup": "rg-azworkbench-dev",
+                "resourceName": "appinsights-azworkbench-prod",
+                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+              }
+            ],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "hide": false,
+          "queryType": "Azure Log Analytics",
+          "refId": "Prod",
+          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+        }
+      ],
+      "title": "Fixed Web Tests",
+      "transparent": true,
+      "type": "status-history"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 100,
+            "lineWidth": 0
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 22,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colWidth": 0.89,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "rowHeight": 0.93,
+        "showValue": "never",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.6",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "query": "availabilityResults\r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h) \r\n| project timestamp, appNameResult, success\r\n| summarize by Time=bin(timestamp, 15min), appNameResult\r\n| evaluate pivot(appNameResult)",
+            "resources": [
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.insights/components/$appinsights"
+            ]
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A",
+          "subscriptions": [
+            "ee611083-4581-4ba1-8116-a502d4539206"
+          ]
+        }
+      ],
+      "title": "App Insights Web Tests",
+      "transparent": true,
+      "type": "status-history"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource",
+          "uid": "azure-monitor-oob"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "subscriptions",
+        "multi": true,
+        "name": "subscriptions",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "queryType": "Azure Subscriptions",
+          "refId": "A"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "rg-azworkbench-dev"
+          ],
+          "value": [
+            "rg-azworkbench-dev"
+          ]
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource",
+          "uid": "azure-monitor-oob"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "resource_groups",
+        "multi": true,
+        "name": "resource_groups",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "queryType": "Azure Resource Groups",
+          "refId": "A",
+          "subscription": "$subscriptions"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource",
+          "uid": "azure-monitor-oob"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "App Insights",
+        "multi": true,
+        "name": "appinsights",
+        "options": [],
+        "query": {
+          "azureLogAnalytics": {
+            "query": "",
+            "resources": []
+          },
+          "azureResourceGraph": {
+            "query": "resources\r\n| where type == \"microsoft.insights/components\"\r\n| project name"
+          },
+          "namespace": "microsoft.insights/components",
+          "queryType": "Azure Resource Names",
+          "refId": "A",
+          "resourceGroup": "$resource_groups",
+          "subscription": "$subscriptions",
+          "subscriptions": [
+            "$subscriptions"
+          ]
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "LTA - Applications",
+  "uid": "fd0bfcae-7a66-4a66-85e8-3b3572c2d450",
+  "version": 33,
+  "weekStart": ""
+}
