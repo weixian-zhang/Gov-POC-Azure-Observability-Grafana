@@ -873,7 +873,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "Weixian-MSOBB"
           ],
@@ -984,8 +984,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LTA - Applications",
+  "title": "Applications",
   "uid": "fd0bfcae-7a66-4a66-85e8-3b3572c2d450",
-  "version": 66,
+  "version": 67,
   "weekStart": ""
 }
