@@ -1,0 +1,5 @@
+AppAvailabilityResults
+| where Success == 'False'
+| where $__timeFilter(TimeGenerated)
+| extend msgArr = split(Message, '\r\n-------------------------------------------------------------------\r\n')
+| project Time=datetime_local_to_utc(TimeGenerated, 'Asia/Singapore'), Name, Error=strcat_array(msgArr, '\n')

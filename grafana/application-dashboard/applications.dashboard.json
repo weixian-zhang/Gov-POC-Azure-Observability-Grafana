@@ -141,7 +141,7 @@
           "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
         }
       ],
-      "title": "Web Tests (last 8 hrs)",
+      "title": "Availability Tests (last 8 hours)",
       "transparent": true,
       "type": "status-history"
     },
@@ -571,6 +571,140 @@
           "custom": {
             "align": "left",
             "cellOptions": {
+              "type": "color-text"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 217
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Error"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 15
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.5.6",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "query": "AppAvailabilityResults\r\n| where Success == 'False'\r\n| where $__timeFilter(TimeGenerated)\r\n| extend msgArr = split(Message, '\\r\\n-------------------------------------------------------------------\\r\\n')\r\n| project Time=datetime_local_to_utc(TimeGenerated, 'Asia/Singapore'), Name, Error=strcat_array(msgArr, '\\n')",
+            "resources": [
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
+            ]
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "Availability Test Errors",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
               "type": "auto"
             },
             "filterable": false,
@@ -623,7 +757,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 247
+                "value": 254
               }
             ]
           },
@@ -685,10 +819,10 @@
         ]
       },
       "gridPos": {
-        "h": 11,
-        "w": 12,
+        "h": 8,
+        "w": 14,
         "x": 0,
-        "y": 15
+        "y": 24
       },
       "id": 4,
       "options": {
@@ -731,7 +865,7 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
@@ -915,13 +1049,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
-    "to": "now"
+    "from": "2023-08-13T23:25:33.445Z",
+    "to": "2023-08-14T11:25:33.445Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "LTA - Applications",
   "uid": "fd0bfcae-7a66-4a66-85e8-3b3572c2d450",
-  "version": 61,
+  "version": 64,
   "weekStart": ""
 }
