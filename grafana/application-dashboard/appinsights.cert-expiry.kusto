@@ -1,0 +1,8 @@
+availabilityResults 
+| where success == 0
+| where message contains "Certificate"
+| order by timestamp desc
+| take 1
+| extend substr = split(message, "Certificate will expire in ")
+| extend cert_expiry_days = iif(array_length(substr) > 1, substring(substr[1], 0, 4), tostring(-1))
+| project cert_expiry_days

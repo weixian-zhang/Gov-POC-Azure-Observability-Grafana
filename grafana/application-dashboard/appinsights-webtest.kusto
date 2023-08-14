@@ -1,9 +1,9 @@
-availabilityResults 
-| extend appNameArr = split(appName, '/')
+AppAvailabilityResults 
+| extend appNameArr = split(Name, '/')
 | extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])
-| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))
-| order by timestamp desc 
-| where timestamp >= ago(8h) 
-| project timestamp, webtestName, success
-| summarize by Time=bin(timestamp, 10min), webtestName
+| extend webtestName = tostring(strcat(AppRoleName, ' (', Location, ' / ', appNameResult, ')'))
+| order by TimeGenerated desc 
+| where TimeGenerated >= ago(8h) 
+| project TimeGenerated, webtestName, Success
+| summarize by Time=bin(TimeGenerated, 10min), webtestName
 | evaluate pivot(webtestName)

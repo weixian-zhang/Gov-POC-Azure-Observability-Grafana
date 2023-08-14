@@ -30,320 +30,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "azureLogAnalytics": {
-            "query": "requests\r\n| take 1",
-            "resources": [
-              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.insights/components/$appinsights"
-            ]
-          },
-          "azureMonitor": {
-            "allowedTimeGrainsMs": [],
-            "timeGrain": "auto"
-          },
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "azure-monitor-oob"
-          },
-          "queryType": "Azure Log Analytics",
-          "refId": "A"
-        }
-      ],
-      "title": "Panel Title",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "grafana-azure-monitor-datasource",
-        "uid": "azure-monitor-oob"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 300000000000
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 5,
-        "x": 14,
-        "y": 0
-      },
-      "id": 6,
-      "options": {
-        "displayMode": "lcd",
-        "minVizHeight": 5,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "text": {
-          "titleSize": 14
-        },
-        "valueMode": "text"
-      },
-      "pluginVersion": "9.5.6",
-      "targets": [
-        {
-          "azureMonitor": {
-            "aggregation": "Total",
-            "alias": "webapp-api-dev",
-            "allowedTimeGrainsMs": [
-              21600000,
-              43200000,
-              86400000
-            ],
-            "customNamespace": "microsoft.web/sites",
-            "dimensionFilters": [],
-            "metricName": "FileSystemUsage",
-            "metricNamespace": "microsoft.web/sites",
-            "region": "southeastasia",
-            "resources": [
-              {
-                "metricNamespace": "Microsoft.Web/sites",
-                "region": "southeastasia",
-                "resourceGroup": "rg-azworkbench-dev",
-                "resourceName": "webapp-api-dev",
-                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
-              }
-            ],
-            "timeGrain": "auto"
-          },
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "azure-monitor-oob"
-          },
-          "queryType": "Azure Monitor",
-          "refId": "webapp-api-dev",
-          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
-        },
-        {
-          "azureMonitor": {
-            "aggregation": "Maximum",
-            "alias": "webapp-api-prod",
-            "allowedTimeGrainsMs": [
-              21600000,
-              43200000,
-              86400000
-            ],
-            "dimensionFilters": [],
-            "metricName": "FileSystemUsage",
-            "metricNamespace": "microsoft.web/sites",
-            "region": "southeastasia",
-            "resources": [
-              {
-                "metricNamespace": "Microsoft.Web/sites",
-                "region": "southeastasia",
-                "resourceGroup": "rg-azworkbench-dev",
-                "resourceName": "webapp-api-prod",
-                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
-              }
-            ],
-            "timeGrain": "auto"
-          },
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "azure-monitor-oob"
-          },
-          "hide": false,
-          "queryType": "Azure Monitor",
-          "refId": "webapp-api-prod",
-          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
-        }
-      ],
-      "title": "Disk Usage",
-      "transparent": true,
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "grafana-azure-monitor-datasource",
-        "uid": "azure-monitor-oob"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "fillOpacity": 100,
-            "lineWidth": 0
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 1
-                },
-                "1": {
-                  "color": "green",
-                  "index": 0
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 22,
-        "y": 0
-      },
-      "id": 3,
-      "options": {
-        "colWidth": 0.89,
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "rowHeight": 0.93,
-        "showValue": "never",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.5.6",
-      "targets": [
-        {
-          "azureLogAnalytics": {
-            "query": "availabilityResults\r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| order by timestamp desc \r\n| where timestamp >= ago(24h) \r\n| project timestamp, appNameResult, success\r\n| summarize by Time=bin(timestamp, 15min), appNameResult\r\n| evaluate pivot(appNameResult)",
-            "resources": [
-              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.insights/components/$appinsights"
-            ]
-          },
-          "azureMonitor": {
-            "allowedTimeGrainsMs": [],
-            "timeGrain": "auto"
-          },
-          "datasource": {
-            "type": "grafana-azure-monitor-datasource",
-            "uid": "azure-monitor-oob"
-          },
-          "queryType": "Azure Log Analytics",
-          "refId": "A",
-          "subscriptions": [
-            "ee611083-4581-4ba1-8116-a502d4539206"
-          ]
-        }
-      ],
-      "title": "App Insights Web Tests",
-      "transparent": true,
-      "type": "status-history"
-    },
-    {
-      "datasource": {
-        "type": "grafana-azure-monitor-datasource",
-        "uid": "azure-monitor-oob"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "thresholds"
           },
           "custom": {
@@ -381,7 +67,7 @@
         "h": 15,
         "w": 14,
         "x": 0,
-        "y": 8
+        "y": 0
       },
       "id": 2,
       "options": {
@@ -402,9 +88,9 @@
       "targets": [
         {
           "azureLogAnalytics": {
-            "query": "availabilityResults \r\n| extend appNameArr = split(appName, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(name, ' (', location, ' / ', appNameResult, ')'))\r\n| order by timestamp desc \r\n| where timestamp >= ago(8h) \r\n| project timestamp, webtestName, success\r\n| summarize by Time=bin(timestamp, 10min), webtestName\r\n| evaluate pivot(webtestName)",
+            "query": "AppAvailabilityResults \r\n| extend appNameArr = split(Name, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(AppRoleName, ' (', Location, ' / ', appNameResult, ')'))\r\n| order by TimeGenerated desc \r\n| where TimeGenerated >= ago(8h) \r\n| project TimeGenerated, webtestName, Success\r\n| summarize by Time=bin(TimeGenerated, 10min), webtestName\r\n| evaluate pivot(webtestName)\r\n",
             "resources": [
-              "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-dev"
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
             ],
             "resultFormat": "$appinsights"
           },
@@ -458,6 +144,419 @@
       "title": "Web Tests (last 8 hrs)",
       "transparent": true,
       "type": "status-history"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "description": "Free - 1 GB | Shared - 1 GB | Basic - 10 GB | Standard - 50 GB | Premium - 250GB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 300000000000
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 14,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 5,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {
+          "titleSize": 14
+        },
+        "valueMode": "text"
+      },
+      "pluginVersion": "9.5.6",
+      "targets": [
+        {
+          "azureMonitor": {
+            "aggregation": "Total",
+            "alias": "Dev - Portal Workbench",
+            "allowedTimeGrainsMs": [
+              21600000,
+              43200000,
+              86400000
+            ],
+            "customNamespace": "microsoft.web/sites",
+            "dimensionFilters": [],
+            "metricName": "FileSystemUsage",
+            "metricNamespace": "microsoft.web/sites",
+            "region": "southeastasia",
+            "resources": [
+              {
+                "metricNamespace": "microsoft.web/sites",
+                "region": "southeastasia",
+                "resourceGroup": "rg-azworkbench-dev",
+                "resourceName": "portal-azworkbench-dev",
+                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+              }
+            ],
+            "timeGrain": "auto",
+            "top": ""
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Monitor",
+          "refId": "webapp-api-dev",
+          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+        },
+        {
+          "azureMonitor": {
+            "aggregation": "Total",
+            "alias": "Production - Portal Workbench",
+            "allowedTimeGrainsMs": [
+              21600000,
+              43200000,
+              86400000
+            ],
+            "customNamespace": "microsoft.web/sites",
+            "dimensionFilters": [],
+            "metricName": "FileSystemUsage",
+            "metricNamespace": "microsoft.web/sites",
+            "region": "southeastasia",
+            "resources": [
+              {
+                "metricNamespace": "Microsoft.Web/sites",
+                "region": "southeastasia",
+                "resourceGroup": "rg-azworkbench-dev",
+                "resourceName": "portal-azworkbench-prod",
+                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+              }
+            ],
+            "timeGrain": "auto",
+            "top": ""
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "hide": false,
+          "queryType": "Azure Monitor",
+          "refId": "A",
+          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+        },
+        {
+          "azureMonitor": {
+            "aggregation": "Total",
+            "alias": "Dev - API Workbench",
+            "allowedTimeGrainsMs": [
+              21600000,
+              43200000,
+              86400000
+            ],
+            "customNamespace": "microsoft.web/sites",
+            "dimensionFilters": [],
+            "metricName": "FileSystemUsage",
+            "metricNamespace": "microsoft.web/sites",
+            "region": "southeastasia",
+            "resources": [
+              {
+                "metricNamespace": "Microsoft.Web/sites",
+                "region": "southeastasia",
+                "resourceGroup": "rg-azworkbench-dev",
+                "resourceName": "webapp-api-dev",
+                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+              }
+            ],
+            "timeGrain": "auto",
+            "top": ""
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "hide": false,
+          "queryType": "Azure Monitor",
+          "refId": "B",
+          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+        },
+        {
+          "azureMonitor": {
+            "aggregation": "Total",
+            "alias": "Prod - API Workbench",
+            "allowedTimeGrainsMs": [
+              21600000,
+              43200000,
+              86400000
+            ],
+            "customNamespace": "microsoft.web/sites",
+            "dimensionFilters": [],
+            "metricName": "FileSystemUsage",
+            "metricNamespace": "microsoft.web/sites",
+            "region": "southeastasia",
+            "resources": [
+              {
+                "metricNamespace": "Microsoft.Web/sites",
+                "region": "southeastasia",
+                "resourceGroup": "rg-azworkbench-dev",
+                "resourceName": "webapp-api-prod",
+                "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+              }
+            ],
+            "timeGrain": "auto",
+            "top": ""
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "hide": false,
+          "queryType": "Azure Monitor",
+          "refId": "C",
+          "subscription": "ee611083-4581-4ba1-8116-a502d4539206"
+        }
+      ],
+      "title": "App Service Disk Usage",
+      "transparent": true,
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineStyle": {
+              "dash": [
+                0,
+                10
+              ],
+              "fill": "dot"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 14,
+        "y": 6
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "query": "AppMetrics \r\n| where Name == \"System.Runtime|Working Set\"\r\n| where $__timeFilter(TimeGenerated)\r\n| order by TimeGenerated desc\r\n| summarize by bin(TimeGenerated, 5min), AppRoleName, Sum\r\n| evaluate pivot(AppRoleName, sum(Sum))",
+            "resources": [
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
+            ]
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory (MB)",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "azure-monitor-oob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineStyle": {
+              "dash": [
+                0,
+                10
+              ],
+              "fill": "dot"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 14,
+        "y": 13
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "query": "AppMetrics \r\n| where Name == 'System.Runtime|CPU Usage'\r\n| where $__timeFilter(TimeGenerated)\r\n| order by TimeGenerated desc\r\n| summarize by bin(TimeGenerated, 5min), AppRoleName, Sum\r\n| evaluate pivot(AppRoleName, sum(Sum))\r\n",
+            "resources": [
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
+            ]
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU %",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -586,10 +685,10 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 15
       },
       "id": 4,
       "options": {
@@ -610,10 +709,9 @@
       "targets": [
         {
           "azureLogAnalytics": {
-            "query": "requests\r\n| where success == 'False'\r\n| where $__timeFilter(timestamp)\r\n| summarize Count=count() by URL=url, HTTP_CODE=resultCode, Duration=performanceBucket, CountryOfOrigin=client_CountryOrRegion",
+            "query": "AppRequests\r\n| where Success == 'False'\r\n| where $__timeFilter(TimeGenerated)\r\n| summarize Count=count() by URL=Url, HTTP_CODE=ResultCode, Duration=PerformanceBucket, \r\nCountryOfOrigin=ClientCountryOrRegion",
             "resources": [
-              "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-dev",
-              "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/microsoft.insights/components/appinsights-azworkbench-prod"
+              "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
             ]
           },
           "azureMonitor": {
@@ -641,12 +739,12 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
-            "All"
+            "Weixian-MSOBB"
           ],
           "value": [
-            "$__all"
+            "ee611083-4581-4ba1-8116-a502d4539206"
           ]
         },
         "datasource": {
@@ -703,52 +801,6 @@
           "queryType": "Azure Resource Groups",
           "refId": "A",
           "subscription": "$subscriptions"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": true,
-          "text": [
-            "appinsights-azworkbench-dev",
-            "appinsights-azworkbench-prod"
-          ],
-          "value": [
-            "appinsights-azworkbench-dev",
-            "appinsights-azworkbench-prod"
-          ]
-        },
-        "datasource": {
-          "type": "grafana-azure-monitor-datasource",
-          "uid": "azure-monitor-oob"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "App Insights",
-        "multi": true,
-        "name": "appinsights",
-        "options": [],
-        "query": {
-          "azureLogAnalytics": {
-            "query": "",
-            "resources": []
-          },
-          "azureResourceGraph": {
-            "query": "resources\r\n| where type == \"microsoft.insights/components\"\r\n| project name"
-          },
-          "namespace": "microsoft.insights/components",
-          "queryType": "Azure Resource Names",
-          "refId": "A",
-          "resourceGroup": "$resource_groups",
-          "subscription": "$subscriptions",
-          "subscriptions": [
-            "$subscriptions"
-          ]
         },
         "refresh": 1,
         "regex": "",
@@ -828,13 +880,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "portal-azworkbench-dev"
-          ],
-          "value": [
-            "portal-azworkbench-dev"
-          ]
+          "selected": false,
+          "text": "law-workbench",
+          "value": "law-workbench"
         },
         "datasource": {
           "type": "grafana-azure-monitor-datasource",
@@ -842,17 +890,17 @@
         },
         "definition": "",
         "hide": 0,
-        "includeAll": true,
-        "label": "App Services",
-        "multi": true,
-        "name": "appsvcs",
+        "includeAll": false,
+        "label": "LA Workspaces",
+        "multi": false,
+        "name": "laws",
         "options": [],
         "query": {
           "azureLogAnalytics": {
             "query": "",
             "resources": []
           },
-          "namespace": "microsoft.web/sites",
+          "namespace": "microsoft.operationalinsights/workspaces",
           "queryType": "Azure Resource Names",
           "refId": "A",
           "resourceGroup": "$resource_groups",
@@ -874,6 +922,6 @@
   "timezone": "",
   "title": "LTA - Applications",
   "uid": "fd0bfcae-7a66-4a66-85e8-3b3572c2d450",
-  "version": 46,
+  "version": 61,
   "weekStart": ""
 }
