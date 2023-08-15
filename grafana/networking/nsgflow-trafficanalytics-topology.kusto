@@ -1,0 +1,16 @@
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology"
+| where TimeGenerated > ago(30d)
+| summarize by ResourceType, SubType_s
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "LoadBalancer"
+| where TimeGenerated > ago(30d)
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "VirtualNetworkPeering"
+| where TimeGenerated > ago(30d)
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "NetworkSecurityGroupRule"
+| where TimeGenerated > ago(30d)

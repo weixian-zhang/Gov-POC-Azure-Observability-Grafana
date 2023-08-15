@@ -1,0 +1,8 @@
+AppAvailabilityResults 
+| extend appNameArr = split(Name, '/')
+| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])
+| extend webtestName = tostring(strcat(AppRoleName, ' (', Location, ' / ', appNameResult, ')'))
+| order by TimeGenerated desc 
+| where TimeGenerated {timerange:value}
+| project webtestName, Success
+| summarize by webtestName, Success

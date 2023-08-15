@@ -1,0 +1,201 @@
+{
+    "version": "Notebook/1.0",
+    "items": [
+      {
+        "type": 9,
+        "content": {
+          "version": "KqlParameterItem/1.0",
+          "parameters": [
+            {
+              "id": "cb3b3f7e-62d7-4b82-bba7-da6b8774a4c0",
+              "version": "KqlParameterItem/1.0",
+              "name": "subs",
+              "label": "Subscriptions",
+              "type": 6,
+              "isRequired": true,
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "includeAll": false,
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "value": "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206"
+            },
+            {
+              "id": "3bf2a42f-29f1-4660-907f-c338ebf4dd80",
+              "version": "KqlParameterItem/1.0",
+              "name": "rgs",
+              "label": "Resource Groups",
+              "type": 5,
+              "query": "resourcecontainers\r\n| where type == 'microsoft.resources/subscriptions/resourcegroups'\r\n| order by name asc\r\n| project value = id, label = id",
+              "crossComponentResources": [
+                "{subs}"
+              ],
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "value": "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev"
+            },
+            {
+              "id": "003324af-6fb7-42f7-bd68-93a6f797c9c9",
+              "version": "KqlParameterItem/1.0",
+              "name": "laws",
+              "label": "LA Workspaces",
+              "type": 5,
+              "query": "where type =~ 'microsoft.operationalinsights/workspaces'\r\n| order by name asc\r\n| project value = id, label = id",
+              "crossComponentResources": [
+                "{rgs}"
+              ],
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
+              "value": "/subscriptions/ee611083-4581-4ba1-8116-a502d4539206/resourceGroups/rg-azworkbench-dev/providers/Microsoft.OperationalInsights/workspaces/law-workbench"
+            },
+            {
+              "id": "b9d4a25b-5fb0-4b75-928f-90e8204770ff",
+              "version": "KqlParameterItem/1.0",
+              "name": "timerange",
+              "label": "Time Range",
+              "type": 4,
+              "typeSettings": {
+                "selectableValues": [
+                  {
+                    "durationMs": 300000
+                  },
+                  {
+                    "durationMs": 900000
+                  },
+                  {
+                    "durationMs": 1800000
+                  },
+                  {
+                    "durationMs": 3600000
+                  },
+                  {
+                    "durationMs": 14400000
+                  },
+                  {
+                    "durationMs": 43200000
+                  },
+                  {
+                    "durationMs": 86400000
+                  },
+                  {
+                    "durationMs": 172800000
+                  },
+                  {
+                    "durationMs": 259200000
+                  },
+                  {
+                    "durationMs": 604800000
+                  },
+                  {
+                    "durationMs": 1209600000
+                  },
+                  {
+                    "durationMs": 2419200000
+                  },
+                  {
+                    "durationMs": 2592000000
+                  },
+                  {
+                    "durationMs": 5184000000
+                  },
+                  {
+                    "durationMs": 7776000000
+                  }
+                ],
+                "allowCustom": true
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "value": {
+                "durationMs": 1800000
+              }
+            }
+          ],
+          "style": "above",
+          "queryType": 0,
+          "resourceType": "microsoft.operationalinsights/workspaces"
+        },
+        "name": "parameters - 1"
+      },
+      {
+        "type": 3,
+        "content": {
+          "version": "KqlItem/1.0",
+          "query": "AppAvailabilityResults \r\n| extend appNameArr = split(Name, '/')\r\n| extend appNameResult = tostring(appNameArr[array_length(appNameArr) - 1])\r\n| extend webtestName = tostring(strcat(AppRoleName, ' (', Location, ' / ', appNameResult, ')'))\r\n| order by TimeGenerated desc \r\n| where TimeGenerated {timerange:value}\r\n| project webtestName, Success\r\n| summarize by webtestName, Success",
+          "size": 0,
+          "noDataMessage": "App Insights tables not found in this workspace",
+          "timeContext": {
+            "durationMs": 86400000
+          },
+          "queryType": 0,
+          "resourceType": "microsoft.operationalinsights/workspaces",
+          "crossComponentResources": [
+            "{laws}"
+          ],
+          "visualization": "graph",
+          "graphSettings": {
+            "type": 2,
+            "topContent": {},
+            "centerContent": {
+              "columnMatch": "webtestName",
+              "formatter": 1
+            },
+            "hivesContent": {
+              "columnMatch": "webtestName",
+              "formatter": 13,
+              "formatOptions": {
+                "linkTarget": null,
+                "showIcon": true
+              }
+            },
+            "nodeIdField": "webtestName",
+            "graphOrientation": 3,
+            "showOrientationToggles": false,
+            "nodeSize": null,
+            "staticNodeSize": 100,
+            "colorSettings": {
+              "nodeColorField": "Success",
+              "type": 3,
+              "thresholdsGrid": [
+                {
+                  "operator": "==",
+                  "thresholdValue": "False",
+                  "representation": "red"
+                },
+                {
+                  "operator": "Default",
+                  "thresholdValue": null,
+                  "representation": "green"
+                }
+              ]
+            },
+            "groupByField": "webtestName",
+            "hivesMargin": 5
+          }
+        },
+        "name": "query - 0"
+      }
+    ],
+    "fallbackResourceIds": [
+      "Azure Monitor"
+    ],
+    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+  }
