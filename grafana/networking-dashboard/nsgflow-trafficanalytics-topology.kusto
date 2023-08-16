@@ -1,0 +1,40 @@
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology"
+| where TimeGenerated > ago(30d)
+| summarize by ResourceType, SubType_s
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "LoadBalancer"
+| where TimeGenerated > ago(30d)
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "VirtualNetworkPeering"
+| where TimeGenerated > ago(30d)
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "NetworkSecurityGroupRule"
+| where TimeGenerated > ago(30d)
+
+
+
+AzureNetworkAnalytics_CL
+| where SubType_s == 'FlowLog'
+| where isempty(VM1_s) or isempty(VM2_s)
+| take 50
+
+AzureNetworkAnalytics_CL
+| where SubType_s == 'FlowLog'
+| summarize by SrcIP_s, VM1_s, DestIP_s, VM2_s
+
+AzureNetworkAnalytics_CL
+| where SubType_s == 'FlowLog'
+| summarize by FlowType_s
+
+
+AzureNetworkAnalytics_CL
+| summarize by  SubType_s, ResourceType
+| where SubType_s == "Topology"
+
+AzureNetworkAnalytics_CL
+| where SubType_s == "Topology" and ResourceType == "VirtualSubnetwork"
+| take 50

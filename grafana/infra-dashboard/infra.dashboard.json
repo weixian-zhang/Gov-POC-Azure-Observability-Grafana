@@ -1,0 +1,285 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 32,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource",
+          "uid": "azure-monitor-oob"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Used %"
+              },
+              "properties": [
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "mode": "lcd",
+                    "type": "gauge"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "orange",
+                        "value": 80
+                      },
+                      {
+                        "color": "dark-red",
+                        "value": 90
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 17,
+          "w": 19,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.5.6",
+        "targets": [
+          {
+            "azureLogAnalytics": {
+              "query": "InsightsMetrics\r\n| where Origin == \"vm.azm.ms\" and Namespace == \"LogicalDisk\" and Name == \"FreeSpaceMB\"\r\n| where TimeGenerated > ago(8d)\r\n| extend totalDiskSize = parse_json(Tags)[\"vm.azm.ms/diskSizeMB\"]\r\n| extend tagJson = parse_json(Tags)\r\n| extend Drive = tostring(tagJson[\"vm.azm.ms/mountId\"])\r\n| extend totalDiskSizeOfDrive = round(todecimal(tagJson[\"vm.azm.ms/diskSizeMB\"])/1000,1) //to GB\r\n| extend FreeSpace=round(Val/1000,1) //to GB\r\n| extend usedSpace= round(totalDiskSizeOfDrive - FreeSpace, 1)\r\n| extend usedPercentage = round((usedSpace / totalDiskSizeOfDrive) * 100, 1)\r\n| summarize arg_max(TimeGenerated,*), max(totalDiskSizeOfDrive), max(usedSpace), max(FreeSpace), max(usedPercentage) by Computer, Drive\r\n| project Computer, Drive, [\"Total Disk Size\"]=totalDiskSizeOfDrive, [\"Used Space\"]=usedSpace, [\"Free Space\"]=FreeSpace, [\"Used %\"]=usedPercentage",
+              "resources": [
+                "/subscriptions/$subscriptions/resourceGroups/$resource_groups/providers/microsoft.operationalinsights/workspaces/$laws"
+              ]
+            },
+            "azureMonitor": {
+              "allowedTimeGrainsMs": [],
+              "timeGrain": "auto"
+            },
+            "azureResourceGraph": {
+              "query": "resources\r\n| where type == \"microsoft.compute/virtualmachines\"\r\n| extend properties = parse_json(properties)\r\n| extend diskId = properties.storageProfile.osDisk.managedDisk.id\r\n"
+            },
+            "datasource": {
+              "type": "grafana-azure-monitor-datasource",
+              "uid": "azure-monitor-oob"
+            },
+            "queryType": "Azure Log Analytics",
+            "refId": "A",
+            "subscriptions": [
+              "ee611083-4581-4ba1-8116-a502d4539206"
+            ]
+          }
+        ],
+        "title": "VM Disks",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {
+                "Computer": 0,
+                "Drive": 1,
+                "Free Space": 3,
+                "Total Disk Size": 2,
+                "Used %": 5,
+                "Used Space": 4
+              },
+              "renameByName": {
+                "Computer": "VM",
+                "Drive": "",
+                "Free Space": "Free (GB)",
+                "Total Disk Size": "Total Disk Size (GB)",
+                "Used %": "",
+                "Used Space": "Used (GB)"
+              }
+            }
+          }
+        ],
+        "transparent": true,
+        "type": "table"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "Weixian-MSOBB",
+            "value": "ee611083-4581-4ba1-8116-a502d4539206"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Subscriptions",
+          "multi": false,
+          "name": "subscriptions",
+          "options": [],
+          "query": {
+            "azureLogAnalytics": {
+              "query": "",
+              "resources": []
+            },
+            "queryType": "Azure Subscriptions",
+            "refId": "A"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": "rgGCCSHOL",
+            "value": "rgGCCSHOL"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "multi": false,
+          "name": "resource_groups",
+          "options": [],
+          "query": {
+            "azureLogAnalytics": {
+              "query": "",
+              "resources": []
+            },
+            "queryType": "Azure Resource Groups",
+            "refId": "A",
+            "subscription": "$subscriptions"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "laa-gccshol",
+            "value": "laa-gccshol"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "azure-monitor-oob"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "LA Workspaces",
+          "multi": false,
+          "name": "laws",
+          "options": [],
+          "query": {
+            "azureLogAnalytics": {
+              "query": "",
+              "resources": []
+            },
+            "namespace": "microsoft.operationalinsights/workspaces",
+            "queryType": "Azure Resource Names",
+            "refId": "A",
+            "resourceGroup": "$resource_groups",
+            "subscription": "$subscriptions"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "2023-01-31T16:00:00.000Z",
+      "to": "2023-09-03T15:59:59.000Z"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Infra",
+    "uid": "e5622f43-2943-4571-aa09-82253c129de1",
+    "version": 6,
+    "weekStart": ""
+  }
