@@ -1,5 +1,5 @@
 AppMetrics 
-| where Name == 'System.Runtime|CPU Usage'
+| where Name == "System.Runtime|Working Set"
 | where $__timeFilter(TimeGenerated)
 | order by TimeGenerated desc
 | summarize by bin(TimeGenerated, 5min), AppRoleName, Sum

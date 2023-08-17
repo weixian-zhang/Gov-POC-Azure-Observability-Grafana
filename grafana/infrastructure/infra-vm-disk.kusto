@@ -1,0 +1,13 @@
+InsightsMetrics
+| where Origin == "vm.azm.ms" and Namespace == "LogicalDisk" and Name == "FreeSpaceMB"
+| where $__timeFilter( TimeGenerated)
+| extend totalDiskSize = parse_json(Tags)["vm.azm.ms/diskSizeMB"]
+| extend tagJson = parse_json(Tags)
+| extend Drive = replace_string(tostring(tagJson["vm.azm.ms/mountId"]), ':', '')
+| extend totalDiskSizeOfDrive = round(todecimal(tagJson["vm.azm.ms/diskSizeMB"])/1000,1) //to GB
+| extend FreeSpace=round(Val/1000,1) //to GB
+| extend usedSpace= round(totalDiskSizeOfDrive - FreeSpace, 1)
+| extend usedPercentage = round((usedSpace / totalDiskSizeOfDrive) * 100, 1)
+| summarize arg_max(TimeGenerated,*), max(totalDiskSizeOfDrive), max(usedSpace), max(FreeSpace), max(usedPercentage) by Computer, Drive
+| project Computer, Drive, Total=totalDiskSizeOfDrive, Used=usedSpace, Free=FreeSpace, UsedPercentage=usedPercentage
+| sort by Computer asc, Drive asc

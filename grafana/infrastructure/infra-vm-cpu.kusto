@@ -1,0 +1,8 @@
+InsightsMetrics
+| where Origin == "vm.azm.ms" and Namespace == "Processor" and Name == "UtilizationPercentage"
+| where $__timeFilter(TimeGenerated)
+| extend jsonTags = parse_json(Tags)
+| extend NumOfCores = toint(jsonTags["vm.azm.ms/totalCpus"])
+| extend CPUPercentage = ceiling(Val)
+| summarize Time=max(TimeGenerated)  by VM= strcat(Computer, ' (', NumOfCores, ' cores)'), NumOfCores, CPUPercentage
+| sort by CPUPercentage ,Time desc 

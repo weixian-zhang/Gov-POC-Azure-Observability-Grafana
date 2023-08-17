@@ -1,0 +1,6 @@
+InsightsMetrics
+| where Origin == "vm.azm.ms" and Namespace == "Computer"
+| where $__timeFilter( TimeGenerated)
+| project Time=TimeGenerated, VM=Computer, HasHeatbeat=Val
+| summarize by Time=bin(Time, 10min), VM
+| evaluate pivot(VM)

@@ -1,0 +1,8 @@
+InsightsMetrics
+| where Origin == "vm.azm.ms" and Namespace =="Memory"
+| where $__timeFilter( TimeGenerated)
+| extend current = ceiling(Val/1000)
+| extend total = ceiling(todecimal(parse_json(Tags)["vm.azm.ms/memorySizeMB"])/1000)
+| extend percentage = ceiling((current / total) * 100)
+| summarize max(current),  max(total), Percentage=max(percentage) by Computer
+| sort by Percentage desc 
