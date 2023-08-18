@@ -22,7 +22,7 @@
 
 
 
-### Infra Dashboard  
+### VM Dashboard  
 
 ![image](https://github.com/weixian-zhang/Gov-POC-Azure-Observability-Grafana/assets/43234101/b32435c8-753a-4232-a83f-baa386c85ab0)
 
