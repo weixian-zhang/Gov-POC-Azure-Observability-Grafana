@@ -12,7 +12,7 @@
    * Application Dashboard is able to read logs from multiple App Insights instances.
      This is made possible by having the multiple Workspaced-enabled App Insights "located" in a single LA workspace, and the kusto query acts on that single LA workspace App Insights tables.
 *Tables starting with <u>App</u>* are App Insights Tables containing logs from multiple instances
-     <img src="https://github.com/weixian-zhang/Gov-POC-Azure-Observability-Grafana/assets/43234101/e2714784-6379-4da8-bd2f-3c62bff692ca" width="200px" height="500px" />
+<img src="https://github.com/weixian-zhang/Gov-POC-Azure-Observability-Grafana/assets/43234101/e2714784-6379-4da8-bd2f-3c62bff692ca" width="200px" height="500px" />
 
 <br />
 
