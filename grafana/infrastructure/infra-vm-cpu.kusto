@@ -4,5 +4,5 @@ InsightsMetrics
 | extend jsonTags = parse_json(Tags)
 | extend NumOfCores = toint(jsonTags["vm.azm.ms/totalCpus"])
 | extend CPUPercentage = ceiling(Val)
-| summarize Time=max(TimeGenerated)  by VM= strcat(Computer, ' (', NumOfCores, ' cores)'), NumOfCores, CPUPercentage
+| summarize Time=max(TimeGenerated), CPUPercentage=max(CPUPercentage)  by VM= strcat(Computer, ' (', NumOfCores, ' cores)'), NumOfCores
 | sort by CPUPercentage ,Time desc 
